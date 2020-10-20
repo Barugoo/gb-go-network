@@ -51,15 +51,17 @@ var posts = map[int]*Post{
 func main() {
 	router := mux.NewRouter()
 
+	// Задание 1
 	// шаблон со списком всех постов (коротким без отображения поля text)
 	// router.HandleFunc("/", listPostsHandler).Methods("GET")
 
-	// шаблон с текстовыми полями для задания Title, Text и Author
-	// router.HandleFunc("/", createPostHandler).Methods("POST")
-
+	// Задание 2
 	// шаблон со страницей одного поста (полного, тобишь с отображением)
 	router.HandleFunc("/{id}", getPostHandler).Methods("GET")
 
+	// Задание 3
+	// шаблон с текстовыми полями для задания Title, Text и Author
+	// router.HandleFunc("/", createPostHandler).Methods("POST")
 	// шаблон с текстовыми полями для обновления Title, Text и Author
 	// router.HandleFunc("/{id}", updatePostHandler).Methods("PUT")
 
