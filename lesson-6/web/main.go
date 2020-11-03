@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	primitive "go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -40,6 +41,8 @@ func main() {
 	router.GET("/list", getTaskList)
 	router.POST("/lists/add", createTaskList)
 	router.GET("/lists/add", createTaskListForm)
+	router.POST("/lists/edit", updateTaskList)
+	router.GET("/lists/edit", updateTaskListForm)
 
 	router.Run(":8099")
 }
@@ -80,13 +83,28 @@ func createTaskList(c *gin.Context) {
 	c.Redirect(http.StatusFound, fmt.Sprintf("/list?id=%s", list.ID.Hex()))
 }
 
+func updateTaskListForm(c *gin.Context) {
+	list, err := GetList(c.Request.URL.Query().Get("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.HTML(http.StatusOK, "list_update_form", list)
+}
+
 func updateTaskList(c *gin.Context) {
+	hex, err := primitive.ObjectIDFromHex(c.Request.URL.Query().Get("id"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	list := TaskList{
+		ID:          hex,
 		Name:        c.Request.FormValue("name"),
 		Description: c.Request.FormValue("description"),
 	}
 
-	list, err := UpdateList(list)
+	list, err = UpdateList(list)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

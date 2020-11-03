@@ -46,15 +46,20 @@ func CreateList(list TaskList) (TaskList, error) {
 	return list, err
 }
 
-// func UpdateList(list TaskList) (err error) {
-// 	c := client.Database(dbName).Collection("lists")
-// 	filter, update := bson.M{"_id": list.ID}, bson.D{}
-// 	update = append(update, bson.E{"name", list.Name}, bson.E{"description", list.Description})
-
-// 	update = bson.D{{"$set", update}}
-// 	_, err = c.UpdateOne(context.TODO(), filter, update)
-// 	return
-// }
+func UpdateList(list TaskList) (TaskList, error) {
+	c := client.Database(dbName).Collection("lists")
+	_, err := c.UpdateOne(context.Background(),
+		bson.M{"_id": list.ID},
+		bson.D{
+			bson.E{"$set", bson.D{
+				bson.E{"name", list.Name},
+				bson.E{"description", list.Description},
+			},
+			},
+		},
+	)
+	return list, err
+}
 
 // // DeleteTask — получение списка по id
 // func DeleteTask(taskID string) error {
