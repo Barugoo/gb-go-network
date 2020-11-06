@@ -1,0 +1,49 @@
+basePath: /
+host: localhost
+info:
+  contact:
+    email: barugoo@yandex.ru
+    name: Dmitry Shelamov
+  description: This is Task List
+  title: Task List
+  version: "1.0"
+paths:
+  /list:
+    get:
+      description: returns single task list page
+      parameters:
+      - description: task list id
+        in: query
+        name: id
+        type: string
+      produces:
+      - text/html
+      summary: PageSingleTaskList
+  /lists:
+    get:
+      produces:
+      - text/html
+      summary: PageTaskLists
+  /lists/add:
+    get:
+      description: returns create task list form
+      produces:
+      - text/html
+      summary: FormCreateTaskList
+    post:
+      description: creates new task list and redirects to /list?id={created tasklist ID}
+      produces:
+      - text/html
+      summary: CreateTaskList
+  /lists/edit:
+    get:
+      description: returns update task list form
+      produces:
+      - text/html
+      summary: FormUpdateTaskList
+    put:
+      description: updates task list and redirects to /list?id={created tasklist ID}
+      produces:
+      - text/html
+      summary: UpdateTaskList
+swagger: "2.0"

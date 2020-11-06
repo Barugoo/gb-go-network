@@ -1,0 +1,73 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is Task List",
+        "title": "Task List",
+        "contact": {
+            "name": "Dmitry Shelamov",
+            "email": "barugoo@yandex.ru"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost",
+    "basePath": "/",
+    "paths": {
+        "/list": {
+            "get": {
+                "description": "returns single task list page",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "PageSingleTaskList",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "task list id",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ]
+            }
+        },
+        "/lists": {
+            "get": {
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "PageTaskLists"
+            }
+        },
+        "/lists/add": {
+            "get": {
+                "description": "returns create task list form",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "FormCreateTaskList"
+            },
+            "post": {
+                "description": "creates new task list and redirects to /list?id={created tasklist ID}",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "CreateTaskList"
+            }
+        },
+        "/lists/edit": {
+            "get": {
+                "description": "returns update task list form",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "FormUpdateTaskList"
+            },
+            "put": {
+                "description": "updates task list and redirects to /list?id={created tasklist ID}",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "UpdateTaskList"
+            }
+        }
+    }
+}
